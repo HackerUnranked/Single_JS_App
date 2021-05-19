@@ -4,10 +4,14 @@ const path = require("path");
 
 // the app is an express app
 const app = express();
+//const cors = require('cors')
+
+//app.use(cors())
 
 // use vs get
 // app.get is called when the http method is a get
 // app.use is called whatever the http method is
+// the express.static grabs the path for us to use and "exposes" its content so we can access it publically
 app.use("/static", express.static(path.resolve(__dirname, "frontend", "static")))
 
 // if we get any links we will just look at index.html in the frontend folder
