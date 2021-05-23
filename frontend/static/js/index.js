@@ -1,3 +1,11 @@
+// If you expect the back-button to take you to the previous piece of content you interacted 
+// with on the page that is the only case for using history.pushState() since it adds a new history entry.
+const navigate_to = url => {
+
+    history.pushState(null, null, url);
+    router();
+}
+
 const router = async () => {
 
     // this is an array of objects in js
@@ -35,8 +43,24 @@ const router = async () => {
     console.log(matches.route.view());
 };
 
+window.addEventListener("popstate", router)
+
 // when the document is loaded call router function
 document.addEventListener("DOMContentLoaded", () => {
 
+    // when a link is clicked call this funciton
+    document.body.addEventListener("click", e => {
+
+        // if the type attribute is data-link
+        if(e.target.matches("[data-link]")){
+
+            // cancel the event
+            e.preventDefault();
+
+            // push the history and store it before navigating
+            // this prevents a page refresh when we click each link
+            navigate_to(e.target.href);
+        }
+    });
     router();
 });
